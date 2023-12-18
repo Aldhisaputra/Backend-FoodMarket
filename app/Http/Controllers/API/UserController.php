@@ -89,4 +89,32 @@ class UserController extends Controller
             ],'Aunthentication',500);
         }
     }
+
+    //API logout
+    public function logout(Request $request)
+    {
+        $token = $request->user()->currentAccessToken()->delete();
+
+        return ResponseFormatter::success($token, 'Token Revoked');
+    }
+
+    //API pengambilan data user
+    public function fetch(Request $request)
+    {
+        return ResponseFormatter::success(
+            $request->user(),'Data profile user berhasil diambil');
+    }
+
+    //API update profile
+    public function updateProfile(Request $request)
+    {
+        $data = $request->all();
+
+        $user = Auth::user();
+        $user->update($data);
+
+        return ResponseFormatter::success($user, 'Profile Update');
+    }
+
+    
 }
