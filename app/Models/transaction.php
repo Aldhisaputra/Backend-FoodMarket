@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class transaction extends Model
+class Transaction extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -18,7 +18,7 @@ class transaction extends Model
 
     public function food()
     {
-        return $this->hasOne(food::class, 'id', 'food_id');
+        return $this->hasOne(Food::class, 'id', 'food_id');
     }
 
     public function user()
