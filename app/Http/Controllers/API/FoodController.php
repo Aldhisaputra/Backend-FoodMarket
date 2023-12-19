@@ -6,7 +6,6 @@ use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\Food;
 use Illuminate\Http\Request;
-use Psy\CodeCleaner\ReturnTypePass;
 
 class FoodController extends Controller
 {
@@ -51,6 +50,11 @@ class FoodController extends Controller
             $food->where('name','like','%'. $name . '%');
         }
 
+        if($types)
+        {
+            $food->where('types','like','%'. $types . '%');
+        }
+
         if($price_from)
         {
             $food->where('price','>=', $price_from);
@@ -72,8 +76,8 @@ class FoodController extends Controller
         }
 
         Return ResponseFormatter::success(
-            $food->paginnate($limit),
-            'Data list produk berhasil diambil'
+            $food->paginate($limit),
+            'Data list produk berhasil diambi'
         );
     }
 }
