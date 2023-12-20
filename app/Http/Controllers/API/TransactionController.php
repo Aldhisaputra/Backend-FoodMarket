@@ -17,8 +17,6 @@ class TransactionController extends Controller
         $food_id = $request->input('food_id');
         $status = $request->input('status');
 
-       
-
         if($id)
         {
             $transaction = Transaction::with(['food','user'])->find($id);
@@ -58,5 +56,14 @@ class TransactionController extends Controller
             $transaction->paginate($limit),
             'Data list transaksi berhasil diambi'
         );
+    }
+
+    public function update(Request $request, $id)
+    {
+        $transaction = Transaction::findOrfail($id);
+
+        $transaction->update($request->all());
+
+        return ResponseFormatter::success($transaction, 'Transaksi berhasil di perbarui');
     }
 }
