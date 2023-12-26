@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-   //return $request->user();
 
     Route::get('user',[UserController::class,'fetch']);
     Route::post('user',[UserController::class,'updateProfile']);

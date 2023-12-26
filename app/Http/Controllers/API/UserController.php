@@ -32,8 +32,8 @@ class UserController extends Controller
                     'messege' => 'Unauthorized'
                 ], 'Authentication failed',500);
             }
+
             //jika hash tidak sesuai error
-            // /Exception
             $user = User::where('email', $request->email)->first();
             if(!Hash::check($request->password, $user->password,[])) {
                 throw new Exception('Invalid Credentials');
@@ -58,13 +58,13 @@ class UserController extends Controller
     public function register(Request $request)
     {
         try {
-           $request->validate([
+        $request->validate([
             'nama' => ['required','string','max:255'],
             'email' => ['required','string','email','max:255','unique:user'],
             'password' => $this->passwordRules()
-           ]);
+        ]);
 
-           User::created([
+        User::created([
             'name' => $request->name,
             'email' => $request->email,
             'address' => $request->address,
@@ -72,17 +72,17 @@ class UserController extends Controller
             'phoneNumber' => $request->phoneNumber,
             'city' => $request->city,
             'password' => Hash::make($request->password),
-           ]);
+        ]);
 
-           $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
-           $tokenResult = $user->createToken('authToken')->plainTextToken;
+        $tokenResult = $user->createToken('authToken')->plainTextToken;
 
-           return ResponseFormatter::success([
+        return ResponseFormatter::success([
             'access_token' => $tokenResult,
             'token_type' => 'Bearer',
             'user' =>$user
-           ]);
+        ]);
         }catch (Exception $error){
             ResponseFormatter::error([
                 'message' => 'Somthing went wrong',
