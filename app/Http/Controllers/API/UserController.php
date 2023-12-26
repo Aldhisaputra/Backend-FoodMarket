@@ -64,7 +64,7 @@ class UserController extends Controller
             'password' => $this->passwordRules()
         ]);
 
-        User::created([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'address' => $request->address,
@@ -84,7 +84,7 @@ class UserController extends Controller
             'user' =>$user
         ]);
         }catch (Exception $error){
-            ResponseFormatter::error([
+        return ResponseFormatter::error([
                 'message' => 'Somthing went wrong',
                 'error' => $error
             ],'Aunthentication',500);
