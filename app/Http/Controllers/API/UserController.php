@@ -58,21 +58,21 @@ class UserController extends Controller
     public function register(Request $request)
     {
         try {
-        $request->validate([
-            'nama' => ['required','string','max:255'],
-            'email' => ['required','string','email','max:255','unique:user'],
-            'password' => $this->passwordRules()
-        ]);
+            $request->validate([
+                'name' => ['required','string','max:255'],
+                'email' => ['required','string','email','max:255','unique:users'],
+                'password' => $this->passwordRules()
+            ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'address' => $request->address,
-            'houseNumber' => $request->houseNumber,
-            'phoneNumber' => $request->phoneNumber,
-            'city' => $request->city,
-            'password' => Hash::make($request->password),
-        ]);
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'address' => $request->address,
+                'houseNumber' => $request->houseNumber,
+                'phoneNumber' => $request->phoneNumber,
+                'city' => $request->city,
+                'password' => Hash::make($request->password),
+            ]);
 
         $user = User::where('email', $request->email)->first();
 
@@ -86,8 +86,8 @@ class UserController extends Controller
         }catch (Exception $error){
         return ResponseFormatter::error([
                 'message' => 'Somthing went wrong',
-                'error' => $error
-            ],'Aunthentication',500);
+                'error' => $error->getMessage(),
+            ],'Authentication',500);
         }
     }
 
