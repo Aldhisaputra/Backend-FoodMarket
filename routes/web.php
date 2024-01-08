@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\MidtransController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +14,19 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+//Homepage
 Route::get('/', function () {
-
+return redirect()->route('admin-dashboard');
 });
 
-Route::middleware([
+//Dashboard
+Route::prefix('dashboard')
+->middleware(['auth:sanctum','admin'])
+->group(function() {
+    Route::get('/',[DashboardController::class, 'index'])->name('admin-dashboard');
+});
+
+/**Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
@@ -27,6 +35,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+**/
 
 Route::get('midtrans/success', [MidtransController::class,'success']);
 Route::get('midtrans/unfinish', [MidtransController::class,'unfinish']);
